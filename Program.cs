@@ -20,7 +20,7 @@ bool Loop = true;
 //BilInfo bilInfo = new("Aj4444", "BMW", "M6", EnumKøreTyper.Bil, "10/10/2015", "Bil");
 
 // Hardcoded mekaniker
-
+// Ekstra kommentar
 
 while (Loop == true)
 {
@@ -60,7 +60,9 @@ start:
     {
         case EnumSH.OpretKunden:
             {
-                Console.WriteLine("\nFirst Name: ");
+                try
+                {
+                    Console.WriteLine("\nFirst Name: ");
                 string? FirstName = Console.ReadLine();
 
                 Console.WriteLine("\nLast Name: ");
@@ -82,41 +84,50 @@ start:
                 
                 Console.WriteLine("\nModel: ");
                 string? Model = Console.ReadLine();
-                
-                Console.WriteLine("\nFormat (DD/MM/ÅR)");
-                Console.WriteLine("RegÅrgang: ");
-                string? RegistreringsÅrgang = Console.ReadLine();
-                string[] SynSplit = RegistreringsÅrgang.Split('/');
-                string day = SynSplit[0];
-                string month = SynSplit[1];
-                string year = SynSplit[2];
-                DateTime BrugerInput = new DateTime(Convert.ToInt16(year), Convert.ToInt16(month), Convert.ToInt16(day));
 
-                Console.WriteLine("\nAngive Køre Type: ");
-                Console.WriteLine("-----------------------------");
-                Console.WriteLine($"{EnumKøreTyper.Bil} | {EnumKøreTyper.MotroCykel} | {EnumKøreTyper.LastBil}");
-                Console.WriteLine("-----------------------------");
-                string? Type = Console.ReadLine();
+                    Console.WriteLine("\nFormat (DD/MM/ÅR)");
+                    Console.WriteLine("RegÅrgang: ");
+                    string? RegistreringsÅrgang = Console.ReadLine();
+                    string[] SynSplit = RegistreringsÅrgang.Split('/');
+                    string day = SynSplit[0];
+                    string month = SynSplit[1];
+                    string year = SynSplit[2];
+                    DateTime BrugerInput = new DateTime(Convert.ToInt16(year), Convert.ToInt16(month), Convert.ToInt16(day));
+                    Console.WriteLine("\nAngive Køre Type: ");
+                    Console.WriteLine("-----------------------------");
+                    Console.WriteLine($"{EnumKøreTyper.Bil} | {EnumKøreTyper.MotroCykel} | {EnumKøreTyper.LastBil}");
+                    Console.WriteLine("-----------------------------");
+                    string? Type = Console.ReadLine();
 
-                if(Type == EnumKøreTyper.Bil.ToString())
-                {
-                    køretøj.KøretøjList.Add(new KøreTøj(NummerPlade,Mærke,Model,RegistreringsÅrgang, EnumKøreTyper.Bil,kunde));
-                }
+                    if (Type == EnumKøreTyper.Bil.ToString())
+                    {
+                        køretøj.KøretøjList.Add(new KøreTøj(NummerPlade, Mærke, Model, RegistreringsÅrgang, EnumKøreTyper.Bil, kunde));
+                    }
 
-                else if(Type == EnumKøreTyper.MotroCykel.ToString())
-                {
-                    køretøj.KøretøjList.Add(new KøreTøj(NummerPlade, Mærke, Model, RegistreringsÅrgang, EnumKøreTyper.MotroCykel, kunde));
+                    else if (Type == EnumKøreTyper.MotroCykel.ToString())
+                    {
+                        køretøj.KøretøjList.Add(new KøreTøj(NummerPlade, Mærke, Model, RegistreringsÅrgang, EnumKøreTyper.MotroCykel, kunde));
+                    }
+                    else if (Type == EnumKøreTyper.LastBil.ToString())
+                    {
+                        køretøj.KøretøjList.Add(new KøreTøj(NummerPlade, Mærke, Model, RegistreringsÅrgang, EnumKøreTyper.LastBil, kunde));
+                    }
+                    Console.Clear();
+
+                    Console.WriteLine($"Kunden Oprettet : {FirstName} {LastName} TelfoneNummer: {Tlf}");
+                    Console.WriteLine($"Med Bilen = {NummerPlade} | {RegistreringsÅrgang}  | {Mærke} | {Model}\n");
+                    Console.ReadKey();
+
+                    goto start;
+
                 }
-                else if(Type == EnumKøreTyper.LastBil.ToString())
+                catch (Exception ex)
                 {
-                    køretøj.KøretøjList.Add(new KøreTøj(NummerPlade, Mærke, Model, RegistreringsÅrgang, EnumKøreTyper.LastBil, kunde));
+                    Console.WriteLine("");
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("");
+                    goto start;
                 }
-                Console.Clear();
-                
-                Console.WriteLine($"Kunden Oprettet : {FirstName} {LastName} TelfoneNummer: {Tlf}");
-                Console.WriteLine($"Med Bilen = {NummerPlade} | {RegistreringsÅrgang}  | {Mærke} | {Model}\n");
-                Console.ReadKey();
-                goto start;
             }
         case EnumSH.Kunden:
             {
